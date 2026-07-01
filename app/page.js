@@ -251,7 +251,7 @@ export default function Home() {
               </p>
 
               <div class="mt-10 flex flex-col sm:flex-row gap-4">
-                <a href="#quote" class="btn-primary group inline-flex items-center justify-center gap-2 text-white font-semibold px-7 py-4 rounded-full tracking-wide">
+                <a href="#contact" class="btn-primary group inline-flex items-center justify-center gap-2 text-white font-semibold px-7 py-4 rounded-full tracking-wide">
                   Calculate Your Price (1-Min Quiz)
                   <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
