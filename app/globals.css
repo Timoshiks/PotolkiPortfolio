@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: var(--font-inter), sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-space-grotesk), sans-serif;
+}
+
+.anchor-target {
+  scroll-margin-top: 108px;
+}
+
+/* Ambient glow orb style */
+.glow-orb {
+  background: radial-gradient(circle, rgba(0,102,255,0.14) 0%, rgba(0,102,255,0) 70%);
+  filter: blur(6px);
+}
+
+.tab-btn[data-active="true"] {
+  background: linear-gradient(135deg, #0066FF 0%, #0050CC 100%);
+  color: #FFFFFF;
+  box-shadow: 0 10px 28px -10px rgba(0,102,255,0.55), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.tab-btn[data-active="false"] {
+  background-color: #FFFFFF;
+  color: #1E293B;
+}
+
+.panel-fade {
+  animation: panelFade .45s ease both;
+}
+
+@keyframes panelFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hover-lift {
+  transition: transform .35s ease, box-shadow .35s ease, background-color .35s ease, border-color .35s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 56px -28px rgba(30,41,59,0.18);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0072FF 0%, #0050CC 100%);
+  box-shadow: 0 12px 28px -10px rgba(0,102,255,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+  transition: box-shadow .3s ease, transform .3s ease, filter .3s ease;
+}
+.btn-primary:hover {
+  box-shadow: 0 18px 40px -12px rgba(0,102,255,0.6), inset 0 1px 0 rgba(255,255,255,0.35);
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+}
+
+.cta-glow {
+  transition: box-shadow .3s ease, transform .3s ease, background-color .3s ease;
+}
+.cta-glow:hover {
+  box-shadow: 0 14px 30px -10px rgba(0,102,255,0.5);
+  transform: translateY(-2px);
+}
+
+.dropdown-panel {
+  transition: opacity .25s ease, transform .25s ease, visibility .25s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel-fade,
+  .hover-lift,
+  .cta-glow,
+  .btn-primary,
+  .dropdown-panel {
+    transition: none;
+    animation: none;
+  }
+}
+
+input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #0066FF;
+  outline-offset: 3px;
+}

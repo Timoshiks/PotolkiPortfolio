@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aura Ceilings — Bespoke Stretch & Lighting Ceilings, UK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          mist: '#F4F7FA',
+          card: '#FFFFFF',
+          ink: '#1E293B',
+          blue: {
+            DEFAULT: '#0066FF',
+            dark: '#0050CC',
+            deep: '#003C99',
+            light: '#E6F0FF',
+          },
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+        },
+      },
+    },
+  }
+</script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background-color: #F4F7FA; color: #1E293B; }
+  .font-display { font-family: 'Space Grotesk', sans-serif; }
+  .anchor-target { scroll-margin-top: 108px; }
+
+  /* ambient glow only — no grid, no dot-matrix */
+  .glow-orb {
+    background: radial-gradient(circle, rgba(0,102,255,0.14) 0%, rgba(0,102,255,0) 70%);
+    filter: blur(6px);
+  }
+
+  .tab-btn[data-active="true"] {
+    background: linear-gradient(135deg, #0066FF 0%, #0050CC 100%);
+    color: #FFFFFF;
+    box-shadow: 0 10px 28px -10px rgba(0,102,255,0.55), inset 0 1px 0 rgba(255,255,255,0.25);
+  }
+  .tab-btn[data-active="false"] {
+    background-color: #FFFFFF;
+    color: #1E293B;
+  }
+
+  .panel-fade { animation: panelFade .45s ease both; }
+  @keyframes panelFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hover-lift { transition: transform .35s ease, box-shadow .35s ease, background-color .35s ease, border-color .35s ease; }
+  .hover-lift:hover { transform: translateY(-6px); box-shadow: 0 28px 56px -28px rgba(30,41,59,0.18); }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #0072FF 0%, #0050CC 100%);
+    box-shadow: 0 12px 28px -10px rgba(0,102,255,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: box-shadow .3s ease, transform .3s ease, filter .3s ease;
+  }
+  .btn-primary:hover { box-shadow: 0 18px 40px -12px rgba(0,102,255,0.6), inset 0 1px 0 rgba(255,255,255,0.35); transform: translateY(-2px); filter: brightness(1.04); }
+
+  .cta-glow { transition: box-shadow .3s ease, transform .3s ease, background-color .3s ease; }
+  .cta-glow:hover { box-shadow: 0 14px 30px -10px rgba(0,102,255,0.5); transform: translateY(-2px); }
+
+  .dropdown-panel { transition: opacity .25s ease, transform .25s ease, visibility .25s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .panel-fade, .hover-lift, .cta-glow, .btn-primary, .dropdown-panel { transition: none; animation: none; }
+  }
+
+  input:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 2px solid #0066FF;
+    outline-offset: 3px;
+  }
+</style>
+</head>
+<body class="antialiased bg-mist">
+
+<!-- ============ HEADER ============ -->
+<header id="site-header" class="fixed top-0 inset-x-0 z-50 bg-mist/85 backdrop-blur-md border-b border-ink/5">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="flex items-center justify-between h-24">
+
+      <!-- Logo -->
+      <a href="#top" class="flex items-center gap-2.5 leading-none group">
+        <span class="w-2.5 h-2.5 rounded-full bg-blue"></span>
+        <span class="font-display font-semibold text-2xl tracking-tight">Aura</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden lg:flex items-center gap-12 font-medium text-[15px]">
+        <a href="#top" class="hover:text-blue transition-colors">Home</a>
+        <div class="relative" id="products-dropdown-wrapper">
+          <button id="products-trigger" class="flex items-center gap-1.5 hover:text-blue transition-colors" aria-haspopup="true" aria-expanded="false">
+            Products
+            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="products-chevron"></i>
+          </button>
+          <div id="products-panel" class="dropdown-panel opacity-0 invisible -translate-y-2 absolute left-1/2 -translate-x-1/2 top-full mt-5 w-72 bg-card rounded-2xl shadow-xl shadow-ink/10 border border-ink/5 p-2">
+            <!-- populated by JS from PRODUCTS -->
+          </div>
+        </div>
+        <a href="#benefits" class="hover:text-blue transition-colors">Our Benefits</a>
+        <a href="#contact" class="hover:text-blue transition-colors">Contact Us</a>
+      </nav>
+
+      <!-- Right: contacts -->
+      <div class="hidden md:flex items-center gap-6">
+        <a href="tel:+442079460192" class="font-display text-lg font-semibold tracking-tight hover:text-blue transition-colors">+44 20 7946 0192</a>
+        <a href="https://wa.me/442079460192" target="_blank" rel="noopener" class="cta-glow flex items-center justify-center w-11 h-11 rounded-full bg-blue text-white hover:bg-blue-dark" aria-label="Chat on WhatsApp">
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+        </a>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button id="mobile-menu-btn" class="lg:hidden flex items-center justify-center w-10 h-10" aria-label="Open menu" aria-expanded="false">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden lg:hidden border-t border-ink/5 bg-mist">
+    <div class="px-6 py-6 flex flex-col gap-1">
+      <a href="#top" class="py-3.5 font-medium border-b border-ink/5 mobile-link">Home</a>
+      <button id="mobile-products-trigger" class="flex items-center justify-between py-3.5 font-medium border-b border-ink/5" aria-expanded="false">
+        Products
+        <i data-lucide="chevron-down" class="w-4 h-4" id="mobile-products-chevron"></i>
+      </button>
+      <div id="mobile-products-panel" class="hidden pl-3 flex flex-col"></div>
+      <a href="#benefits" class="py-3.5 font-medium border-b border-ink/5 mobile-link">Our Benefits</a>
+      <a href="#contact" class="py-3.5 font-medium border-b border-ink/5 mobile-link">Contact Us</a>
+      <div class="flex items-center justify-between pt-6">
+        <a href="tel:+442079460192" class="font-display text-lg font-semibold">+44 20 7946 0192</a>
+        <a href="https://wa.me/442079460192" target="_blank" rel="noopener" class="flex items-center justify-center w-11 h-11 rounded-full bg-blue text-white" aria-label="Chat on WhatsApp">
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="relative pt-48 pb-28 md:pt-60 md:pb-40 px-6 md:px-10 overflow-hidden bg-mist">
+  <div class="absolute -top-24 right-[-10%] w-[560px] h-[560px] glow-orb rounded-full pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 lg:gap-14 items-center relative">
+    <div>
+      <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-blue mb-7">
+        <span class="w-2 h-2 rounded-full bg-blue"></span> Bespoke Ceilings, Installed UK-Wide
+      </span>
+      <h1 class="font-display text-[2.5rem] leading-[1.12] md:text-6xl md:leading-[1.08] font-semibold tracking-tight">
+        Elevate Your Space: bespoke ceiling solutions across the UK
+      </h1>
+      <p class="mt-7 text-lg text-ink/65 max-w-lg leading-relaxed">
+        Flawless stretch &amp; integrated lighting ceilings installed in 1 day. No dust, no mess, premium certified materials.
+      </p>
+
+      <div class="mt-10 flex flex-col sm:flex-row gap-4">
+        <a href="#quote" class="btn-primary group inline-flex items-center justify-center gap-2 text-white font-semibold px-7 py-4 rounded-full tracking-wide">
+          Calculate Your Price (1-Min Quiz)
+          <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+        </a>
+        <a href="https://wa.me/442079460192" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 border border-ink/20 hover:border-blue hover:text-blue font-semibold px-7 py-4 rounded-full transition-colors">
+          Chat on WhatsApp
+        </a>
+      </div>
+
+      <div class="mt-11 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm text-ink/55">
+        <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue"></i> Fixed quote, no hidden costs</div>
+        <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-blue"></i> Free home survey</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="rounded-[1.75rem] overflow-hidden shadow-2xl shadow-ink/10 border border-white">
+        <img src="https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=1200&q=80"
+             alt="Bright modern living room with an integrated lighting ceiling"
+             class="w-full h-[380px] md:h-[480px] object-cover">
+      </div>
+
+      <div class="mt-5 flex flex-wrap items-center gap-x-8 gap-y-5 bg-white rounded-2xl shadow-lg shadow-ink/5 border border-ink/5 px-7 py-6">
+        <div class="flex items-center gap-3.5">
+          <div class="w-10 h-10 shrink-0 rounded-full bg-blue-light flex items-center justify-center">
+            <i data-lucide="sparkles" class="w-4.5 h-4.5 text-blue"></i>
+          </div>
+          <div class="leading-tight whitespace-nowrap">
+            <p class="text-sm font-semibold">1-Day Install</p>
+            <p class="text-xs text-ink/50">Certified &amp; insured</p>
+          </div>
+        </div>
+        <div class="hidden sm:block h-9 w-px bg-ink/10"></div>
+        <div class="flex items-center gap-3.5">
+          <div class="w-10 h-10 shrink-0 rounded-full bg-blue-light flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-4.5 h-4.5 text-blue"></i>
+          </div>
+          <div class="leading-tight whitespace-nowrap">
+            <p class="text-sm font-semibold">10-Year Warranty</p>
+            <p class="text-xs text-ink/50">Insurance-backed</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATALOG (TABS) ============ -->
+<section id="catalog" class="anchor-target py-28 md:py-36 px-6 md:px-10 bg-white">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-xl mb-14">
+      <span class="text-xs font-semibold tracking-[0.2em] uppercase text-blue">Our Solutions</span>
+      <h2 class="font-display text-4xl md:text-[2.75rem] font-semibold tracking-tight mt-4">Modern Ceiling Systems</h2>
+      <p class="mt-5 text-ink/60 leading-relaxed">Four systems, one outcome: a ceiling that finishes the room, rather than one you simply stop noticing.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div id="tabs-row" class="flex flex-wrap gap-3 mb-11" role="tablist"></div>
+
+    <!-- Panel -->
+    <div id="product-panel"></div>
+  </div>
+</section>
+
+<!-- ============ BENEFITS ============ -->
+<section id="benefits" class="anchor-target py-28 md:py-36 px-6 md:px-10 bg-mist">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-xl mb-16">
+      <span class="text-xs font-semibold tracking-[0.2em] uppercase text-blue">Our Benefits</span>
+      <h2 class="font-display text-4xl md:text-[2.75rem] font-semibold tracking-tight mt-4">No dust, no surprises, no chasing us up</h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <div class="hover-lift bg-white rounded-2xl p-8 border border-ink/5">
+        <div class="w-12 h-12 rounded-xl bg-blue-light flex items-center justify-center mb-6">
+          <i data-lucide="wind" class="w-6 h-6 text-blue"></i>
+        </div>
+        <h3 class="font-display text-xl font-semibold mb-2.5">Dust-Free Installation</h3>
+        <p class="text-sm text-ink/60 leading-relaxed">Every fit uses advanced vacuum extraction, so your furniture, floors and walls stay exactly as we found them.</p>
+      </div>
+
+      <div class="hover-lift bg-white rounded-2xl p-8 border border-ink/5">
+        <div class="w-12 h-12 rounded-xl bg-blue-light flex items-center justify-center mb-6">
+          <i data-lucide="shield-check" class="w-6 h-6 text-blue"></i>
+        </div>
+        <h3 class="font-display text-xl font-semibold mb-2.5">10-Year Warranty</h3>
+        <p class="text-sm text-ink/60 leading-relaxed">An insurance-backed guarantee on materials and workmanship, confirmed in writing before any work begins.</p>
+      </div>
+
+      <div class="hover-lift bg-white rounded-2xl p-8 border border-ink/5">
+        <div class="w-12 h-12 rounded-xl bg-blue-light flex items-center justify-center mb-6">
+          <i data-lucide="leaf" class="w-6 h-6 text-blue"></i>
+        </div>
+        <h3 class="font-display text-xl font-semibold mb-2.5">Eco-Friendly Materials</h3>
+        <p class="text-sm text-ink/60 leading-relaxed">Certified, non-toxic, A+ rated membranes — safe for bedrooms, nurseries and anyone with allergies.</p>
+      </div>
+
+      <div class="hover-lift bg-white rounded-2xl p-8 border border-ink/5">
+        <div class="w-12 h-12 rounded-xl bg-blue-light flex items-center justify-center mb-6">
+          <i data-lucide="lightbulb" class="w-6 h-6 text-blue"></i>
+        </div>
+        <h3 class="font-display text-xl font-semibold mb-2.5">Expert Lighting Craft</h3>
+        <p class="text-sm text-ink/60 leading-relaxed">Flawless track systems and shadow-gap profiles, designed to work with the room instead of against it.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ GET IN TOUCH ============ -->
+<section id="quote" class="anchor-target py-28 md:py-36 px-6 md:px-10 bg-ink text-white relative overflow-hidden">
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[640px] h-[640px] glow-orb rounded-full pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto relative">
+    <div class="max-w-xl mb-16">
+      <span class="text-xs font-semibold tracking-[0.2em] uppercase text-blue">Get in Touch</span>
+      <h2 class="font-display text-4xl md:text-[2.75rem] font-semibold tracking-tight mt-4">Tell us about your room, we'll quote your ceiling</h2>
+      <p class="mt-5 text-white/55 leading-relaxed">Pick whichever channel suits you — we reply within 15 minutes during business hours.</p>
+    </div>
+
+    <div id="contact" class="anchor-target grid sm:grid-cols-3 gap-6">
+
+      <a href="tel:+442079460192" class="hover-lift group bg-white/5 hover:bg-blue border border-white/10 hover:border-blue rounded-2xl p-8 flex flex-col gap-6">
+        <div class="w-12 h-12 rounded-xl bg-white/10 group-hover:bg-white/20 flex items-center justify-center">
+          <i data-lucide="phone" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h3 class="font-display text-xl font-semibold mb-1">Call Us Directly</h3>
+          <p class="text-sm text-white/50 group-hover:text-white/85">+44 20 7946 0192</p>
+        </div>
+      </a>
+
+      <a href="https://wa.me/442079460192" target="_blank" rel="noopener" class="hover-lift group bg-white/5 hover:bg-blue border border-white/10 hover:border-blue rounded-2xl p-8 flex flex-col gap-6">
+        <div class="w-12 h-12 rounded-xl bg-white/10 group-hover:bg-white/20 flex items-center justify-center">
+          <i data-lucide="message-circle" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h3 class="font-display text-xl font-semibold mb-1">Message on WhatsApp</h3>
+          <p class="text-sm text-white/50 group-hover:text-white/85">Typically replies in 15 minutes</p>
+        </div>
+      </a>
+
+      <a href="https://instagram.com/aura.ceilings.uk" target="_blank" rel="noopener" class="hover-lift group bg-white/5 hover:bg-blue border border-white/10 hover:border-blue rounded-2xl p-8 flex flex-col gap-6">
+        <div class="w-12 h-12 rounded-xl bg-white/10 group-hover:bg-white/20 flex items-center justify-center">
+          <i data-lucide="instagram" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h3 class="font-display text-xl font-semibold mb-1">Follow Our Portfolio</h3>
+          <p class="text-sm text-white/50 group-hover:text-white/85">200+ completed installations</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-white border-t border-ink/5 px-6 md:px-10 pt-20 pb-10">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
+    <div class="md:col-span-2">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-blue"></span>
+        <span class="font-display font-semibold text-2xl">Aura</span>
+      </div>
+      <p class="mt-5 text-sm text-ink/55 max-w-xs leading-relaxed">We design and install ceiling systems that become part of the room's architecture — not just something fitted over your head.</p>
+    </div>
+    <div>
+      <h4 class="font-semibold mb-5 text-sm">Navigation</h4>
+      <ul class="space-y-3 text-sm text-ink/55">
+        <li><a href="#catalog" class="hover:text-blue">Products</a></li>
+        <li><a href="#benefits" class="hover:text-blue">Our Benefits</a></li>
+        <li><a href="#contact" class="hover:text-blue">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold mb-5 text-sm">Contact</h4>
+      <ul class="space-y-3 text-sm text-ink/55">
+        <li><a href="tel:+442079460192" class="hover:text-blue">+44 20 7946 0192</a></li>
+        <li><a href="https://wa.me/442079460192" class="hover:text-blue">WhatsApp</a></li>
+        <li><a href="https://instagram.com/aura.ceilings.uk" class="hover:text-blue">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto mt-14 pt-7 border-t border-ink/5 text-xs text-ink/40 flex flex-col sm:flex-row justify-between gap-2">
+    <span>© <span id="year"></span> Aura Ceilings. All rights reserved.</span>
+    <span>Bespoke ceiling installation across the UK</span>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---------- DATA ----------
+  const PRODUCTS = [
+    {
+      id: 'stretch',
+      tab: 'Stretch Ceilings',
+      title: 'Stretch Ceilings',
+      desc: 'The classic done properly: a perfectly smooth membrane with no seams or joins. Matte, gloss and satin finishes to suit any interior.',
+      features: ['150+ membrane shades', 'Fitted in 3–5 hours', 'Perfectly level finish', 'Won\'t yellow or warp over time'],
+      price: 'From £45/m²',
+      img: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=1000&q=80',
+    },
+    {
+      id: 'lighting',
+      tab: 'Lighting Ceilings',
+      title: 'Lighting Ceilings',
+      desc: 'A ceiling that lights the room from within: concealed LED lines trace the geometry of the space, and a floating edge gives the whole structure a weightless feel.',
+      features: ['Dimmable warm-white or RGB', 'Floating edge & linear light', 'LED strip rated for 15+ years', 'Controlled from your phone'],
+      price: 'From £110/m²',
+      img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1000&q=80',
+    },
+    {
+      id: 'acoustic',
+      tab: 'Acoustic Ceilings',
+      title: 'Acoustic Ceilings',
+      desc: 'Quiet, built in: an acoustic membrane absorbs echo and outside noise while looking indistinguishable from a premium matte ceiling.',
+      features: ['Reduces noise by up to 30%', 'Ideal for home cinemas & studies', 'Hypoallergenic materials', 'Same premium appearance'],
+      price: 'From £145/m²',
+      img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80',
+    },
+    {
+      id: 'sail',
+      tab: 'Ceiling Sail',
+      title: 'Ceiling Sail',
+      desc: 'Sculptural curves where a flat ceiling simply can\'t compete. A multi-level fabric sail turns your ceiling into an architectural feature.',
+      features: ['Bespoke shape and curvature', 'Sail-effect fabric finish', 'Illumination built into the folds', 'Suited to lofts & high ceilings'],
+      price: 'From £240/m²',
+      img: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1000&q=80',
+    },
+  ];
+
+  let activeProduct = PRODUCTS[0].id;
+
+  // ---------- RENDER: desktop dropdown ----------
+  const productsPanel = document.getElementById('products-panel');
+  productsPanel.innerHTML = PRODUCTS.map(p => `
+    <button data-product="${p.id}" class="product-link w-full text-left px-4 py-3 rounded-xl hover:bg-blue-light flex items-center justify-between group">
+      <span class="font-medium">${p.tab}</span>
+      <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 text-blue transition-opacity"></i>
+    </button>
+  `).join('');
+
+  // ---------- RENDER: mobile dropdown ----------
+  const mobileProductsPanel = document.getElementById('mobile-products-panel');
+  mobileProductsPanel.innerHTML = PRODUCTS.map(p => `
+    <button data-product="${p.id}" class="product-link text-left py-2.5 text-ink/70 border-b border-ink/5 last:border-0">${p.tab}</button>
+  `).join('');
+
+  // ---------- RENDER: tabs ----------
+  const tabsRow = document.getElementById('tabs-row');
+  function renderTabs() {
+    tabsRow.innerHTML = PRODUCTS.map(p => `
+      <button role="tab" data-tab="${p.id}" data-active="${p.id === activeProduct}"
+        class="tab-btn px-5 py-2.5 rounded-full text-sm font-semibold border border-ink/10 transition-colors duration-300">
+        ${p.tab}
+      </button>
+    `).join('');
+  }
+
+  // ---------- RENDER: panel ----------
+  const productPanel = document.getElementById('product-panel');
+  function renderPanel() {
+    const p = PRODUCTS.find(x => x.id === activeProduct);
+    productPanel.innerHTML = `
+      <div class="panel-fade grid lg:grid-cols-2 gap-12 items-center bg-mist rounded-3xl p-7 md:p-11 border border-ink/5">
+        <div class="order-2 lg:order-1">
+          <h3 class="font-display text-3xl font-semibold mb-4">${p.title}</h3>
+          <p class="text-ink/65 leading-relaxed mb-7">${p.desc}</p>
+          <ul class="space-y-3.5 mb-9">
+            ${p.features.map(f => `
+              <li class="flex items-start gap-3 text-sm">
+                <i data-lucide="check" class="w-4 h-4 mt-0.5 text-blue shrink-0"></i>
+                <span class="text-ink/75">${f}</span>
+              </li>`).join('')}
+          </ul>
+          <div class="flex items-center flex-wrap gap-6">
+            <span class="font-display text-2xl font-semibold">${p.price}</span>
+            <a href="https://wa.me/442079460192?text=Hi, I'd like a quote for ${encodeURIComponent(p.title)}" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 text-white font-semibold px-6 py-3.5 rounded-full tracking-wide">
+              Enquire via WhatsApp
+            </a>
+          </div>
+        </div>
+        <div class="order-1 lg:order-2 rounded-2xl overflow-hidden shadow-xl shadow-ink/10 border border-white">
+          <img src="${p.img}" alt="${p.title} — example interior" class="w-full h-72 md:h-96 object-cover">
+        </div>
+      </div>
+    `;
+    lucide.createIcons();
+  }
+
+  function setActiveProduct(id, { scroll = false } = {}) {
+    activeProduct = id;
+    renderTabs();
+    renderPanel();
+    bindTabClicks();
+    if (scroll) {
+      document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  function bindTabClicks() {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => setActiveProduct(btn.dataset.tab));
+    });
+  }
+
+  function bindProductLinks() {
+    document.querySelectorAll('.product-link').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setActiveProduct(btn.dataset.product, { scroll: true });
+        closeDesktopDropdown();
+        closeMobileMenu();
+      });
+    });
+  }
+
+  renderTabs();
+  renderPanel();
+  bindTabClicks();
+  bindProductLinks();
+
+  // ---------- Desktop dropdown open/close ----------
+  const productsTrigger = document.getElementById('products-trigger');
+  const productsChevron = document.getElementById('products-chevron');
+  let dropdownOpen = false;
+
+  function openDesktopDropdown() {
+    dropdownOpen = true;
+    productsPanel.classList.remove('opacity-0', 'invisible', '-translate-y-2');
+    productsTrigger.setAttribute('aria-expanded', 'true');
+    productsChevron.style.transform = 'rotate(180deg)';
+  }
+  function closeDesktopDropdown() {
+    dropdownOpen = false;
+    productsPanel.classList.add('opacity-0', 'invisible', '-translate-y-2');
+    productsTrigger.setAttribute('aria-expanded', 'false');
+    productsChevron.style.transform = 'rotate(0deg)';
+  }
+  productsTrigger.addEventListener('click', () => dropdownOpen ? closeDesktopDropdown() : openDesktopDropdown());
+  document.addEventListener('click', (e) => {
+    if (!document.getElementById('products-dropdown-wrapper').contains(e.target)) closeDesktopDropdown();
+  });
+
+  // ---------- Mobile menu ----------
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  function closeMobileMenu() {
+    mobileMenu.classList.add('hidden');
+    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+  }
+  mobileMenuBtn.addEventListener('click', () => {
+    const isHidden = mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden');
+    mobileMenuBtn.setAttribute('aria-expanded', String(isHidden));
+  });
+  document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', closeMobileMenu));
+
+  const mobileProductsTrigger = document.getElementById('mobile-products-trigger');
+  const mobileProductsChevron = document.getElementById('mobile-products-chevron');
+  mobileProductsTrigger.addEventListener('click', () => {
+    const panel = document.getElementById('mobile-products-panel');
+    const isHidden = panel.classList.contains('hidden');
+    panel.classList.toggle('hidden');
+    mobileProductsChevron.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+    mobileProductsTrigger.setAttribute('aria-expanded', String(isHidden));
+  });
+</script>
+
+</body>
+</html>

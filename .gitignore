@@ -1,0 +1,25 @@
+# Node dependencies
+node_modules/
+
+# Local Node binary
+.node_bin/
+
+# Next.js build output
+.next/
+out/
+
+# Production builds
+build/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env*.local
