@@ -65,7 +65,19 @@ export default function Home() {
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [currentYear, setCurrentYear] = useState(2026);
 
+  // Form states
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+  const [phone, setPhone] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
   const dropdownRef = useRef(null);
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (!name || !location || !phone) return;
+    setFormSubmitted(true);
+  };
 
   // Set the current year client-side
   useEffect(() => {
@@ -396,61 +408,152 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ============ GET IN TOUCH (REDESIGNED LIGHT THEME) ============ */}
+        {/* ============ GET IN TOUCH (REDESIGNED LIGHT THEME WITH FORM) ============ */}
         <section id="quote" class="anchor-target py-28 md:py-36 px-6 md:px-10 bg-gradient-to-br from-white to-blue-light/20 text-ink relative overflow-hidden border-t border-b border-ink/5">
           <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[640px] h-[640px] glow-orb rounded-full pointer-events-none opacity-40"></div>
 
-          <div class="max-w-7xl mx-auto relative z-10">
-            <div class="max-w-xl mb-16">
+          <div class="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* Left Column: Direct Contacts */}
+            <div class="lg:col-span-7">
               <span class="text-xs font-semibold tracking-[0.2em] uppercase text-blue">Get in Touch</span>
-              <h2 class="font-display text-4xl md:text-[2.75rem] font-semibold tracking-tight mt-4 text-ink">Tell us about your room, we'll quote your ceiling</h2>
-              <p class="mt-5 text-ink/60 leading-relaxed">Pick whichever channel suits you — we reply within 15 minutes during business hours.</p>
+              <h2 class="font-display text-4xl md:text-[2.75rem] font-semibold tracking-tight mt-4 text-ink">
+                Tell us about your room, we'll quote your ceiling
+              </h2>
+              <p class="mt-5 text-ink/60 leading-relaxed max-w-xl">
+                Fill out the quote form to calculate your price, or reach us directly via your preferred channel. We reply within 15 minutes during business hours.
+              </p>
+
+              <div class="mt-10 flex flex-col gap-4 max-w-lg">
+                <a
+                  href="tel:+442079460192"
+                  class="flex items-center gap-4 p-4 bg-white/60 hover:bg-blue hover:text-white border border-ink/5 rounded-2xl transition-all duration-350 group shadow-sm"
+                >
+                  <div class="w-10 h-10 rounded-xl bg-blue-light text-blue group-hover:bg-white/20 group-hover:text-white flex items-center justify-center transition-colors">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p class="text-xs text-ink/50 group-hover:text-white/70 transition-colors">Call directly</p>
+                    <p class="font-semibold text-sm">+44 20 7946 0192</p>
+                  </div>
+                </a>
+
+                <a
+                  href="https://wa.me/442079460192"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-4 p-4 bg-white/60 hover:bg-blue hover:text-white border border-ink/5 rounded-2xl transition-all duration-350 group shadow-sm"
+                >
+                  <div class="w-10 h-10 rounded-xl bg-blue-light text-blue group-hover:bg-white/20 group-hover:text-white flex items-center justify-center transition-colors">
+                    <MessageCircle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p class="text-xs text-ink/50 group-hover:text-white/70 transition-colors">WhatsApp message</p>
+                    <p class="font-semibold text-sm">Typically replies in 15 mins</p>
+                  </div>
+                </a>
+
+                <a
+                  href="https://instagram.com/aura.ceilings.uk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-4 p-4 bg-white/60 hover:bg-blue hover:text-white border border-ink/5 rounded-2xl transition-all duration-350 group shadow-sm"
+                >
+                  <div class="w-10 h-10 rounded-xl bg-blue-light text-blue group-hover:bg-white/20 group-hover:text-white flex items-center justify-center transition-colors">
+                    <Instagram className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p class="text-xs text-ink/50 group-hover:text-white/70 transition-colors">Instagram Portfolio</p>
+                    <p class="font-semibold text-sm">200+ completed installations</p>
+                  </div>
+                </a>
+              </div>
             </div>
 
-            <div id="contact" class="anchor-target grid sm:grid-cols-3 gap-6">
-              <a
-                href="tel:+442079460192"
-                class="hover-lift group bg-white hover:bg-blue border border-ink/5 hover:border-blue rounded-2xl p-8 flex flex-col gap-6 text-ink hover:text-white shadow-sm hover:shadow-xl hover:shadow-blue/15 transition-all duration-350"
-              >
-                <div class="w-12 h-12 rounded-xl bg-blue-light text-blue group-hover:bg-white/20 group-hover:text-white flex items-center justify-center transition-colors duration-300">
-                  <Phone className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 class="font-display text-xl font-semibold mb-1">Call Us Directly</h3>
-                  <p class="text-sm text-ink/50 group-hover:text-white/80 transition-colors duration-300">+44 20 7946 0192</p>
-                </div>
-              </a>
+            {/* Right Column: Quote Form */}
+            <div id="contact" class="anchor-target lg:col-span-5">
+              <div class="bg-white rounded-3xl p-8 border border-ink/5 shadow-xl shadow-ink/5 relative overflow-hidden">
+                {formSubmitted ? (
+                  <div class="panel-fade flex flex-col items-center text-center py-8">
+                    <div class="w-16 h-16 rounded-full bg-blue-light text-blue flex items-center justify-center mb-6">
+                      <CheckCircle2 className="w-10 h-10" />
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold mb-3">Request Received!</h3>
+                    <p class="text-ink/65 text-sm leading-relaxed max-w-xs">
+                      Thank you, <strong>{name}</strong>! We will calculate the cost for your room in <strong>{location}</strong> and contact you at <strong>{phone}</strong> within 15 minutes.
+                    </p>
+                    <button
+                      onClick={() => {
+                        setFormSubmitted(false);
+                        setName("");
+                        setLocation("");
+                        setPhone("");
+                      }}
+                      class="mt-8 text-sm font-semibold text-blue hover:underline"
+                    >
+                      Submit another request
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleFormSubmit} class="flex flex-col gap-5">
+                    <div>
+                      <h3 class="font-display text-2xl font-semibold mb-1">Calculate Cost</h3>
+                      <p class="text-xs text-ink/50">Submit your details to get a free price calculation</p>
+                    </div>
 
-              <a
-                href="https://wa.me/442079460192"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hover-lift group bg-white hover:bg-blue border border-ink/5 hover:border-blue rounded-2xl p-8 flex flex-col gap-6 text-ink hover:text-white shadow-sm hover:shadow-xl hover:shadow-blue/15 transition-all duration-350"
-              >
-                <div class="w-12 h-12 rounded-xl bg-blue-light text-blue group-hover:bg-white/20 group-hover:text-white flex items-center justify-center transition-colors duration-300">
-                  <MessageCircle className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 class="font-display text-xl font-semibold mb-1">Message on WhatsApp</h3>
-                  <p class="text-sm text-ink/50 group-hover:text-white/80 transition-colors duration-300">Typically replies in 15 minutes</p>
-                </div>
-              </a>
+                    <div class="h-px bg-ink/5 my-1"></div>
 
-              <a
-                href="https://instagram.com/aura.ceilings.uk"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hover-lift group bg-white hover:bg-blue border border-ink/5 hover:border-blue rounded-2xl p-8 flex flex-col gap-6 text-ink hover:text-white shadow-sm hover:shadow-xl hover:shadow-blue/15 transition-all duration-350"
-              >
-                <div class="w-12 h-12 rounded-xl bg-blue-light text-blue group-hover:bg-white/20 group-hover:text-white flex items-center justify-center transition-colors duration-300">
-                  <Instagram className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 class="font-display text-xl font-semibold mb-1">Follow Our Portfolio</h3>
-                  <p class="text-sm text-ink/50 group-hover:text-white/80 transition-colors duration-300">200+ completed installations</p>
-                </div>
-              </a>
+                    <div class="flex flex-col gap-1.5">
+                      <label htmlFor="name-input" class="text-xs font-semibold text-ink/70">Your Name</label>
+                      <input
+                        id="name-input"
+                        type="text"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="John Doe"
+                        class="w-full px-4 py-3 bg-mist rounded-xl border border-ink/5 focus:outline-none focus:border-blue text-sm text-ink placeholder-ink/30"
+                      />
+                    </div>
+
+                    <div class="flex flex-col gap-1.5">
+                      <label htmlFor="location-input" class="text-xs font-semibold text-ink/70">Where do you live? (City / Area)</label>
+                      <input
+                        id="location-input"
+                        type="text"
+                        required
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        placeholder="e.g. London, Chelsea"
+                        class="w-full px-4 py-3 bg-mist rounded-xl border border-ink/5 focus:outline-none focus:border-blue text-sm text-ink placeholder-ink/30"
+                      />
+                    </div>
+
+                    <div class="flex flex-col gap-1.5">
+                      <label htmlFor="phone-input" class="text-xs font-semibold text-ink/70">Phone Number</label>
+                      <input
+                        id="phone-input"
+                        type="tel"
+                        required
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="e.g. +44 7911 123456"
+                        class="w-full px-4 py-3 bg-mist rounded-xl border border-ink/5 focus:outline-none focus:border-blue text-sm text-ink placeholder-ink/30"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      class="btn-primary w-full text-white font-semibold py-4 rounded-xl mt-2 flex items-center justify-center gap-2"
+                    >
+                      Calculate My Price
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </form>
+                )}
+              </div>
             </div>
+            
           </div>
         </section>
 
