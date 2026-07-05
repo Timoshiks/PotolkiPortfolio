@@ -159,6 +159,24 @@ export default function Home() {
     }
   };
 
+  const handleCalculateClick = (e) => {
+    e.preventDefault();
+    const isMobile = window.innerWidth < 1024;
+    const targetId = isMobile ? "calculator" : "contact";
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      const headerHeight = 96; // h-24 = 96px
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
+
   const activeProductData = PRODUCTS.find((p) => p.id === activeProduct);
 
   return (
@@ -301,7 +319,11 @@ export default function Home() {
               </p>
 
               <div class="mt-10 flex flex-col sm:flex-row gap-4">
-                <a href="#contact" class="btn-primary group inline-flex items-center justify-center gap-2 text-white font-semibold px-7 py-4 rounded-full tracking-wide">
+                <a 
+                  href="#contact" 
+                  onClick={handleCalculateClick}
+                  class="btn-primary group inline-flex items-center justify-center gap-2 text-white font-semibold px-7 py-4 rounded-full tracking-wide cursor-pointer"
+                >
                   Calculate Your Price (1-Min Quiz)
                   <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
@@ -569,7 +591,7 @@ export default function Home() {
             </div>
 
             {/* Right Column: Quote Form */}
-            <div class="lg:col-span-5 scroll-reveal reveal-delay-200">
+            <div id="calculator" class="lg:col-span-5 scroll-reveal reveal-delay-200">
               <div class="bg-white rounded-3xl p-8 border border-ink/5 shadow-xl shadow-ink/5 relative overflow-hidden">
                 {formSubmitted ? (
                   <div class="panel-fade flex flex-col items-center text-center py-8">
