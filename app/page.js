@@ -507,7 +507,7 @@ export default function Home() {
         </section>
 
         {/* ============ GET IN TOUCH (REDESIGNED LIGHT THEME WITH FORM) ============ */}
-        <section id="quote" class="anchor-target py-28 md:py-36 px-6 md:px-10 bg-gradient-to-br from-white to-blue-light/20 text-ink relative overflow-hidden border-t border-b border-ink/5">
+        <section id="quote" class="anchor-target py-28 md:py-36 px-6 md:px-10 bg-gradient-to-br from-mist to-blue-light/20 text-ink relative overflow-hidden border-b border-ink/5">
           <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[640px] h-[640px] glow-orb rounded-full pointer-events-none opacity-40"></div>
 
           <div class="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
