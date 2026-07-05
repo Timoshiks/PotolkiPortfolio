@@ -29,7 +29,7 @@ const PRODUCTS = [
     desc: 'The classic done properly: a perfectly smooth membrane with no seams or joins. Matte, gloss and satin finishes to suit any interior.',
     features: ['150+ membrane shades', 'Fitted in 3–5 hours', 'Perfectly level finish', 'Won\'t yellow or warp over time'],
     price: 'From £45/m²',
-    img: '/images/stretch.jpg',
+    img: '/images/stretch.webp',
   },
   {
     id: 'lighting',
@@ -38,7 +38,7 @@ const PRODUCTS = [
     desc: 'A ceiling that lights the room from within: concealed LED lines trace the geometry of the space, and a floating edge gives the whole structure a weightless feel.',
     features: ['Dimmable warm-white or RGB', 'Floating edge & linear light', 'LED strip rated for 15+ years', 'Controlled from your phone'],
     price: 'From £110/m²',
-    img: '/images/lighting.jpg',
+    img: '/images/lighting.webp',
   },
   {
     id: 'acoustic',
@@ -47,7 +47,7 @@ const PRODUCTS = [
     desc: 'Quiet, built in: an acoustic membrane absorbs echo and outside noise while looking indistinguishable from a premium matte ceiling.',
     features: ['Reduces noise by up to 30%', 'Ideal for home cinemas & studies', 'Hypoallergenic materials', 'Same premium appearance'],
     price: 'From £145/m²',
-    img: '/images/acoustic.jpg',
+    img: '/images/acoustic.webp',
   },
   {
     id: 'sail',
@@ -56,7 +56,7 @@ const PRODUCTS = [
     desc: 'Sculptural curves where a flat ceiling simply can\'t compete. A multi-level fabric sail turns your ceiling into an architectural feature.',
     features: ['Bespoke shape and curvature', 'Sail-effect fabric finish', 'Illumination built into the folds', 'Suited to lofts & high ceilings'],
     price: 'From £240/m²',
-    img: '/images/sail.jpg',
+    img: '/images/sail.webp',
   },
 ];
 
@@ -275,7 +275,7 @@ export default function Home() {
               <div className="relative rounded-[1.75rem] overflow-hidden shadow-2xl shadow-ink/10 border border-white h-[380px] md:h-[480px] select-none bg-ink">
                 {/* Main Base Image */}
                 <img
-                  src="/images/hero.jpg"
+                  src="/images/hero.webp"
                   alt="Bright modern living room with an integrated lighting ceiling"
                   className="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"
                   style={{
@@ -296,7 +296,7 @@ export default function Home() {
 
                 {/* Glowing Ceiling LED Lines Layer */}
                 <img
-                  src="/images/hero.jpg"
+                  src="/images/hero.webp"
                   alt="Glowing ceiling track lights"
                   className={`absolute inset-0 w-full h-full object-cover mix-blend-screen pointer-events-none transition-opacity duration-700 ease-in-out ${
                     isNightMode ? "opacity-90" : "opacity-0"
