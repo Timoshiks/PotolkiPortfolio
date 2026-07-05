@@ -272,25 +272,49 @@ export default function Home() {
             </div>
 
             <div>
-              <div className="relative rounded-[1.75rem] overflow-hidden shadow-2xl shadow-ink/10 border border-white h-[380px] md:h-[480px] select-none">
-                {/* Day Image */}
+              <div className="relative rounded-[1.75rem] overflow-hidden shadow-2xl shadow-ink/10 border border-white h-[380px] md:h-[480px] select-none bg-ink">
+                {/* Main Base Image */}
                 <img
                   src="/images/hero.jpg"
-                  alt="Bright modern living room with an integrated lighting ceiling (Day)"
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-                    isNightMode ? "opacity-0" : "opacity-100"
-                  }`}
+                  alt="Bright modern living room with an integrated lighting ceiling"
+                  className="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"
+                  style={{
+                    filter: isNightMode 
+                      ? "brightness(0.35) contrast(1.1) saturate(0.6)" 
+                      : "none"
+                  }}
                   draggable="false"
                 />
 
-                {/* Night Image */}
+                {/* Dark Blue Moonlight Overlay (Mix-blend multiplier) */}
+                <div 
+                  className={`absolute inset-0 bg-indigo-950/35 mix-blend-multiply pointer-events-none transition-opacity duration-700 ease-in-out ${
+                    isNightMode ? "opacity-100" : "opacity-0"
+                  }`} 
+                />
+
+                {/* Glowing Ceiling LED Lines Layer */}
                 <img
-                  src="/images/hero_night.jpg"
-                  alt="Bright modern living room with an integrated lighting ceiling (Night)"
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                  src="/images/hero.jpg"
+                  alt="Glowing ceiling track lights"
+                  className={`absolute inset-0 w-full h-full object-cover mix-blend-screen pointer-events-none transition-opacity duration-700 ease-in-out ${
+                    isNightMode ? "opacity-90" : "opacity-0"
+                  }`}
+                  style={{
+                    clipPath: "polygon(0 0, 100% 0, 100% 48%, 0 48%)",
+                    filter: "brightness(2.2) contrast(1.8) saturate(0.3) blur(2px)"
+                  }}
+                  draggable="false"
+                />
+
+                {/* Warm Light Ambient Glow radiating from the ceiling lights */}
+                <div 
+                  className={`absolute inset-0 bg-gradient-to-b from-amber-500/20 via-amber-500/5 to-transparent mix-blend-screen pointer-events-none transition-opacity duration-700 ease-in-out ${
                     isNightMode ? "opacity-100" : "opacity-0"
                   }`}
-                  draggable="false"
+                  style={{
+                    clipPath: "polygon(0 0, 100% 0, 100% 65%, 0 65%)"
+                  }}
                 />
 
                 {/* English Dual Toggle Control (Top-Right overlay) */}
