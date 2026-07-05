@@ -1,4 +1,5 @@
 "use client";
+// Vercel deployment trigger - revert ceiling anatomy section
 
 import React, { useState, useEffect, useRef } from "react";
 import {
