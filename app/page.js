@@ -67,52 +67,8 @@ export default function Home() {
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [currentYear, setCurrentYear] = useState(2026);
 
-  // Day/Night comparison slider states and handlers
-  const [sliderPosition, setSliderPosition] = useState(50);
-  const [isDragging, setIsDragging] = useState(false);
-  const containerRef = useRef(null);
-
-  const handleMove = (clientX) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    let position = (x / rect.width) * 100;
-    if (position < 0) position = 0;
-    if (position > 100) position = 100;
-    setSliderPosition(position);
-  };
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!isDragging) return;
-      handleMove(e.clientX);
-    };
-
-    const handleTouchMove = (e) => {
-      if (!isDragging) return;
-      if (e.touches.length > 0) {
-        handleMove(e.touches[0].clientX);
-      }
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    if (isDragging) {
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("touchmove", handleTouchMove, { passive: true });
-      window.addEventListener("mouseup", handleMouseUp);
-      window.addEventListener("touchend", handleMouseUp);
-    }
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("touchend", handleMouseUp);
-    };
-  }, [isDragging]);
+  // Day/Night mode state
+  const [isNightMode, setIsNightMode] = useState(false);
 
   // Form states
   const [name, setName] = useState("");
@@ -316,72 +272,59 @@ export default function Home() {
             </div>
 
             <div>
-              <div 
-                ref={containerRef}
-                onMouseDown={(e) => {
-                  setIsDragging(true);
-                  handleMove(e.clientX);
-                }}
-                onTouchStart={(e) => {
-                  setIsDragging(true);
-                  if (e.touches.length > 0) handleMove(e.touches[0].clientX);
-                }}
-                className="relative rounded-[1.75rem] overflow-hidden shadow-2xl shadow-ink/10 border border-white h-[380px] md:h-[480px] select-none cursor-ew-resize group"
-              >
-                {/* Day Image (Base) */}
+              <div className="relative rounded-[1.75rem] overflow-hidden shadow-2xl shadow-ink/10 border border-white h-[380px] md:h-[480px] select-none">
+                {/* Day Image */}
                 <img
                   src="/images/hero.jpg"
                   alt="Bright modern living room with an integrated lighting ceiling (Day)"
-                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                    isNightMode ? "opacity-0" : "opacity-100"
+                  }`}
                   draggable="false"
                 />
 
-                {/* Night Image (Overlay) */}
+                {/* Night Image */}
                 <img
                   src="/images/hero_night.jpg"
                   alt="Bright modern living room with an integrated lighting ceiling (Night)"
-                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                  style={{
-                    clipPath: `polygon(0 0, ${sliderPosition}% 0, ${sliderPosition}% 100%, 0 100%)`,
-                  }}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                    isNightMode ? "opacity-100" : "opacity-0"
+                  }`}
                   draggable="false"
                 />
 
-                {/* Vertical Divider Line */}
-                <div 
-                  className="absolute top-0 bottom-0 w-[2px] bg-white/80 backdrop-blur-sm z-20 pointer-events-none"
-                  style={{ left: `${sliderPosition}%` }}
-                >
-                  {/* Central Handle */}
-                  <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white text-blue shadow-lg shadow-black/20 flex items-center justify-center border border-blue/10">
-                    <span className="flex items-center gap-0.5 text-xs font-bold pointer-events-none select-none text-blue">
-                      <span>◀</span>
-                      <span>▶</span>
-                    </span>
-                  </div>
+                {/* English Dual Toggle Control (Top-Right overlay) */}
+                <div className="absolute top-5 right-5 bg-white/95 backdrop-blur-md p-1 rounded-full flex gap-1 z-10 shadow-lg border border-ink/5">
+                  <button
+                    type="button"
+                    onClick={() => setIsNightMode(false)}
+                    className={`px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-1.5 transition-all duration-200 ${
+                      !isNightMode
+                        ? "bg-blue text-white shadow-sm"
+                        : "text-ink/65 hover:text-ink hover:bg-ink/5"
+                    }`}
+                  >
+                    <Sun className={`w-4 h-4 ${!isNightMode ? "text-white fill-white" : "text-orange-500"}`} />
+                    <span>Day</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsNightMode(true)}
+                    className={`px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-1.5 transition-all duration-200 ${
+                      isNightMode
+                        ? "bg-blue text-white shadow-sm"
+                        : "text-ink/65 hover:text-ink hover:bg-ink/5"
+                    }`}
+                  >
+                    <Moon className={`w-4 h-4 ${isNightMode ? "text-white fill-white" : "text-indigo-500"}`} />
+                    <span>Night</span>
+                  </button>
                 </div>
 
-                {/* Night Label (Left side, since night is shown on the left) */}
-                <div 
-                  className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 z-10 transition-opacity duration-300 pointer-events-none"
-                  style={{ opacity: sliderPosition > 15 ? 1 : 0 }}
-                >
-                  <Moon className="w-3.5 h-3.5 text-yellow-300 fill-yellow-300" />
-                  <span>Ночь</span>
-                </div>
-
-                {/* Day Label (Right side, since day is shown on the right) */}
-                <div 
-                  className="absolute bottom-4 right-4 bg-white/80 backdrop-blur-md text-ink px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 z-10 transition-opacity duration-300 pointer-events-none"
-                  style={{ opacity: sliderPosition < 85 ? 1 : 0 }}
-                >
-                  <Sun className="w-3.5 h-3.5 text-orange-500 fill-orange-500" />
-                  <span>День</span>
-                </div>
-
-                {/* Bottom Overlay Info Banner on Hover */}
-                <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/45 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-xs font-medium z-10 pointer-events-none transition-opacity duration-300 opacity-80 group-hover:opacity-100 whitespace-nowrap">
-                  Двигайте слайдер, чтобы включить свет
+                {/* English Label Overlay at bottom-left */}
+                <div className="absolute bottom-5 left-5 bg-black/60 backdrop-blur-md text-white px-4 py-2 rounded-xl text-xs font-semibold z-10 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-blue animate-pulse"></span>
+                  <span>{isNightMode ? "Night Lighting Active" : "Daylight Mode"}</span>
                 </div>
               </div>
 
