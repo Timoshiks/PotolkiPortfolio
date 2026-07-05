@@ -302,7 +302,8 @@ export default function Home() {
                     isNightMode ? "opacity-100" : "opacity-0"
                   }`}
                   style={{
-                    filter: "drop-shadow(0 0 12px rgba(255, 255, 255, 0.65))"
+                    filter: "drop-shadow(0 0 12px rgba(255, 255, 255, 0.65))",
+                    clipPath: "polygon(0 0, 100% 0, 100% 31%, 75% 39%, 25% 39%, 0 34%)"
                   }}
                   draggable="false"
                 />
