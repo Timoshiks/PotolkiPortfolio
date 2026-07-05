@@ -113,6 +113,33 @@ export default function Home() {
     };
   }, []);
 
+  // Apple-style scroll-reveal animation using Intersection Observer
+  useEffect(() => {
+    const revealElements = document.querySelectorAll(".scroll-reveal");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.05,
+        rootMargin: "0px 0px -50px 0px"
+      }
+    );
+
+    revealElements.forEach((el) => observer.observe(el));
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   const selectProductFromMenu = (productId) => {
     setActiveProduct(productId);
     setDropdownOpen(false);
@@ -255,7 +282,7 @@ export default function Home() {
           <div class="absolute -top-24 right-[-10%] w-[560px] h-[560px] glow-orb rounded-full pointer-events-none"></div>
 
           <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 lg:gap-14 items-center relative">
-            <div>
+            <div className="scroll-reveal">
               <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-blue mb-7">
                 <span class="w-2 h-2 rounded-full bg-blue"></span> Bespoke Ceilings, Installed UK-Wide
               </span>
@@ -282,7 +309,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div>
+            <div className="scroll-reveal reveal-delay-200">
               <div className="relative rounded-[1.75rem] overflow-hidden shadow-2xl shadow-ink/10 border border-white h-[380px] md:h-[480px] select-none bg-ink">
                 {/* Day Image */}
                 <img
@@ -367,14 +394,14 @@ export default function Home() {
         {/* ============ CATALOG (TABS) ============ */}
         <section id="catalog" class="anchor-target py-28 md:py-36 px-6 md:px-10 bg-white">
           <div class="max-w-7xl mx-auto">
-            <div class="max-w-xl mb-14">
+            <div class="max-w-xl mb-14 scroll-reveal">
               <span class="text-xs font-semibold tracking-[0.2em] uppercase text-blue">Our Solutions</span>
               <h2 class="font-display text-4xl md:text-[2.75rem] font-semibold tracking-tight mt-4">Modern Ceiling Systems</h2>
               <p class="mt-5 text-ink/60 leading-relaxed">Four systems, one outcome: a ceiling that finishes the room, rather than one you simply stop noticing.</p>
             </div>
 
             {/* Tabs */}
-            <div id="tabs-row" class="flex flex-wrap gap-3 mb-11" role="tablist">
+            <div id="tabs-row" class="flex flex-wrap gap-3 mb-11 scroll-reveal reveal-delay-100" role="tablist">
               {PRODUCTS.map((p) => (
                 <button
                   key={p.id}
@@ -391,7 +418,7 @@ export default function Home() {
             {/* Panel */}
             <div id="product-panel">
               {activeProductData && (
-                <div className="panel-fade grid lg:grid-cols-2 gap-12 items-center bg-mist rounded-3xl p-7 md:p-11 border border-ink/5">
+                <div className="panel-fade grid lg:grid-cols-2 gap-12 items-center bg-mist rounded-3xl p-7 md:p-11 border border-ink/5 scroll-reveal reveal-delay-200">
                   <div class="order-2 lg:order-1">
                     <h3 class="font-display text-3xl font-semibold mb-4">{activeProductData.title}</h3>
                     <p class="text-ink/65 leading-relaxed mb-7">{activeProductData.desc}</p>
@@ -431,13 +458,13 @@ export default function Home() {
         {/* ============ BENEFITS ============ */}
         <section id="benefits" class="anchor-target py-28 md:py-36 px-6 md:px-10 bg-mist">
           <div class="max-w-7xl mx-auto">
-            <div class="max-w-xl mb-16">
+            <div class="max-w-xl mb-16 scroll-reveal">
               <span class="text-xs font-semibold tracking-[0.2em] uppercase text-blue">Our Benefits</span>
               <h2 class="font-display text-4xl md:text-[2.75rem] font-semibold tracking-tight mt-4">No dust, no surprises, no chasing us up</h2>
             </div>
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div class="hover-lift bg-white rounded-2xl p-8 border border-ink/5">
+              <div class="hover-lift bg-white rounded-2xl p-8 border border-ink/5 scroll-reveal reveal-delay-100">
                 <div class="w-12 h-12 rounded-xl bg-blue-light flex items-center justify-center mb-6">
                   <Wind className="w-6 h-6 text-blue" />
                 </div>
@@ -445,7 +472,7 @@ export default function Home() {
                 <p class="text-sm text-ink/60 leading-relaxed">Every fit uses advanced vacuum extraction, so your furniture, floors and walls stay exactly as we found them.</p>
               </div>
 
-              <div class="hover-lift bg-white rounded-2xl p-8 border border-ink/5">
+              <div class="hover-lift bg-white rounded-2xl p-8 border border-ink/5 scroll-reveal reveal-delay-200">
                 <div class="w-12 h-12 rounded-xl bg-blue-light flex items-center justify-center mb-6">
                   <ShieldCheck className="w-6 h-6 text-blue" />
                 </div>
@@ -453,7 +480,7 @@ export default function Home() {
                 <p class="text-sm text-ink/60 leading-relaxed">An insurance-backed guarantee on materials and workmanship, confirmed in writing before any work begins.</p>
               </div>
 
-              <div class="hover-lift bg-white rounded-2xl p-8 border border-ink/5">
+              <div class="hover-lift bg-white rounded-2xl p-8 border border-ink/5 scroll-reveal reveal-delay-300">
                 <div class="w-12 h-12 rounded-xl bg-blue-light flex items-center justify-center mb-6">
                   <Leaf className="w-6 h-6 text-blue" />
                 </div>
@@ -461,7 +488,7 @@ export default function Home() {
                 <p class="text-sm text-ink/60 leading-relaxed">Certified, non-toxic, A+ rated membranes — safe for bedrooms, nurseries and anyone with allergies.</p>
               </div>
 
-              <div class="hover-lift bg-white rounded-2xl p-8 border border-ink/5">
+              <div class="hover-lift bg-white rounded-2xl p-8 border border-ink/5 scroll-reveal reveal-delay-400">
                 <div class="w-12 h-12 rounded-xl bg-blue-light flex items-center justify-center mb-6">
                   <Lightbulb className="w-6 h-6 text-blue" />
                 </div>
@@ -479,7 +506,7 @@ export default function Home() {
           <div class="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
             {/* Left Column: Direct Contacts */}
-            <div class="lg:col-span-7">
+            <div class="lg:col-span-7 scroll-reveal">
               <span class="text-xs font-semibold tracking-[0.2em] uppercase text-blue">Get in Touch</span>
               <h2 class="font-display text-4xl md:text-[2.75rem] font-semibold tracking-tight mt-4 text-ink">
                 Tell us about your room, we'll quote your ceiling
@@ -535,7 +562,7 @@ export default function Home() {
             </div>
 
             {/* Right Column: Quote Form */}
-            <div id="contact" class="anchor-target lg:col-span-5">
+            <div id="contact" class="anchor-target lg:col-span-5 scroll-reveal reveal-delay-200">
               <div class="bg-white rounded-3xl p-8 border border-ink/5 shadow-xl shadow-ink/5 relative overflow-hidden">
                 {formSubmitted ? (
                   <div class="panel-fade flex flex-col items-center text-center py-8">
