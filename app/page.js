@@ -288,9 +288,10 @@ export default function Home() {
 
                 {/* Dark Blue Moonlight Overlay (Mix-blend multiplier) */}
                 <div 
-                  className={`absolute inset-0 bg-indigo-950/35 mix-blend-multiply pointer-events-none transition-opacity duration-700 ease-in-out ${
+                  className={`absolute inset-0 mix-blend-multiply pointer-events-none transition-opacity duration-700 ease-in-out ${
                     isNightMode ? "opacity-100" : "opacity-0"
                   }`} 
+                  style={{ backgroundColor: "rgba(10, 15, 30, 0.65)" }}
                 />
 
                 {/* Glowing Ceiling LED Lines Layer */}
