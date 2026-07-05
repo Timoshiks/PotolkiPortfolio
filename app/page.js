@@ -85,9 +85,19 @@ export default function Home() {
     setFormSubmitted(true);
   };
 
-  // Set the current year client-side
+  // Set the current year client-side & preload catalog images
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
+    
+    // Preload catalog images in the background to ensure instant tab switching
+    PRODUCTS.forEach((product) => {
+      const img = new Image();
+      img.src = product.img;
+    });
+
+    // Preload the night mode hero image
+    const nightHero = new Image();
+    nightHero.src = "/images/hero_image_night.webp";
   }, []);
 
   // Handle clicking outside to close the desktop products dropdown
