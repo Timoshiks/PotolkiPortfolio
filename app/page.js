@@ -463,7 +463,7 @@ export default function Home() {
         </section>
 
         {/* ============ BENEFITS ============ */}
-        <section id="benefits" class="anchor-target py-28 md:py-36 px-6 md:px-10 bg-mist">
+        <section id="benefits" class="anchor-target min-h-[calc(100vh-96px)] flex flex-col justify-center py-16 md:py-20 px-6 md:px-10 bg-mist">
           <div class="max-w-7xl mx-auto">
             <div class="max-w-xl mb-16 scroll-reveal">
               <span class="text-xs font-semibold tracking-[0.2em] uppercase text-blue">Our Benefits</span>
@@ -507,7 +507,7 @@ export default function Home() {
         </section>
 
         {/* ============ GET IN TOUCH (REDESIGNED LIGHT THEME WITH FORM) ============ */}
-        <section id="contact" class="anchor-target py-20 md:py-24 px-6 md:px-10 bg-gradient-to-br from-mist to-blue-light/20 text-ink relative overflow-hidden border-b border-ink/5">
+        <section id="contact" class="anchor-target pt-12 pb-12 md:pt-14 md:pb-14 px-6 md:px-10 bg-gradient-to-br from-mist to-blue-light/20 text-ink relative overflow-hidden border-b border-ink/5">
           <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[640px] h-[640px] glow-orb rounded-full pointer-events-none opacity-40"></div>
 
           <div class="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -658,7 +658,7 @@ export default function Home() {
       </main>
 
       {/* ============ FOOTER ============ */}
-      <footer class="bg-white border-t border-ink/5 px-6 md:px-10 pt-20 pb-10">
+      <footer class="bg-white border-t border-ink/5 px-6 md:px-10 pt-10 pb-6">
         <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
           <div class="md:col-span-2">
             <div class="flex items-center gap-2.5">
@@ -686,7 +686,7 @@ export default function Home() {
             </ul>
           </div>
         </div>
-        <div class="max-w-7xl mx-auto mt-14 pt-7 border-t border-ink/5 text-xs text-ink/40 flex flex-col sm:flex-row justify-between gap-2">
+        <div class="max-w-7xl mx-auto mt-8 pt-4 border-t border-ink/5 text-xs text-ink/40 flex flex-col sm:flex-row justify-between gap-2">
           <span>© {currentYear} Aura Ceilings. All rights reserved.</span>
           <span>Bespoke ceiling installation across the UK</span>
         </div>
