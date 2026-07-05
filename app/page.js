@@ -145,10 +145,18 @@ export default function Home() {
     setDropdownOpen(false);
     setMobileMenuOpen(false);
     
-    // Smooth scroll to catalog
-    const catalogSection = document.getElementById("catalog");
-    if (catalogSection) {
-      catalogSection.scrollIntoView({ behavior: "smooth" });
+    // Smooth scroll to tabs-row with header offset so the content is fully visible
+    const tabsRow = document.getElementById("tabs-row");
+    if (tabsRow) {
+      const headerHeight = 96; // h-24 = 96px
+      const extraSpacing = 20; // 20px extra spacing
+      const elementPosition = tabsRow.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - (headerHeight + extraSpacing);
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
     }
   };
 
