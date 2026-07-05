@@ -145,13 +145,12 @@ export default function Home() {
     setDropdownOpen(false);
     setMobileMenuOpen(false);
     
-    // Smooth scroll to tabs-row with header offset so the content is fully visible
-    const tabsRow = document.getElementById("tabs-row");
-    if (tabsRow) {
+    // Smooth scroll to catalog top with header offset so both heading and content are visible
+    const catalogSection = document.getElementById("catalog");
+    if (catalogSection) {
       const headerHeight = 96; // h-24 = 96px
-      const extraSpacing = 20; // 20px extra spacing
-      const elementPosition = tabsRow.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - (headerHeight + extraSpacing);
+      const elementPosition = catalogSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
       
       window.scrollTo({
         top: offsetPosition,
@@ -400,16 +399,16 @@ export default function Home() {
         </section>
 
         {/* ============ CATALOG (TABS) ============ */}
-        <section id="catalog" class="anchor-target py-28 md:py-36 px-6 md:px-10 bg-white">
+        <section id="catalog" class="anchor-target pt-16 pb-28 md:pt-20 md:pb-36 px-6 md:px-10 bg-white">
           <div class="max-w-7xl mx-auto">
-            <div class="max-w-xl mb-14 scroll-reveal">
+            <div class="max-w-xl mb-8 scroll-reveal">
               <span class="text-xs font-semibold tracking-[0.2em] uppercase text-blue">Our Solutions</span>
               <h2 class="font-display text-4xl md:text-[2.75rem] font-semibold tracking-tight mt-4">Modern Ceiling Systems</h2>
-              <p class="mt-5 text-ink/60 leading-relaxed">Four systems, one outcome: a ceiling that finishes the room, rather than one you simply stop noticing.</p>
+              <p class="mt-4 text-ink/60 leading-relaxed">Four systems, one outcome: a ceiling that finishes the room, rather than one you simply stop noticing.</p>
             </div>
 
             {/* Tabs */}
-            <div id="tabs-row" class="flex flex-wrap gap-3 mb-11 scroll-reveal reveal-delay-100" role="tablist">
+            <div id="tabs-row" class="flex flex-wrap gap-3 mb-8 scroll-reveal reveal-delay-100" role="tablist">
               {PRODUCTS.map((p) => (
                 <button
                   key={p.id}
@@ -426,7 +425,7 @@ export default function Home() {
             {/* Panel */}
             <div id="product-panel">
               {activeProductData && (
-                <div className="panel-fade grid lg:grid-cols-2 gap-12 items-center bg-mist rounded-3xl p-7 md:p-11 border border-ink/5 scroll-reveal reveal-delay-200">
+                <div className="panel-fade grid lg:grid-cols-2 gap-12 items-center bg-mist rounded-3xl p-6 md:p-8 border border-ink/5 scroll-reveal reveal-delay-200">
                   <div class="order-2 lg:order-1">
                     <h3 class="font-display text-3xl font-semibold mb-4">{activeProductData.title}</h3>
                     <p class="text-ink/65 leading-relaxed mb-7">{activeProductData.desc}</p>
