@@ -273,7 +273,7 @@ export default function Home() {
 
             <div>
               <div className="relative rounded-[1.75rem] overflow-hidden shadow-2xl shadow-ink/10 border border-white h-[380px] md:h-[480px] select-none bg-ink">
-                {/* Main Base Image */}
+                {/* 1. Base Day Image */}
                 <img
                   src="/images/hero.webp"
                   alt="Bright modern living room with an integrated lighting ceiling"
@@ -286,7 +286,7 @@ export default function Home() {
                   draggable="false"
                 />
 
-                {/* Dark Blue Moonlight Overlay (Mix-blend multiplier) */}
+                {/* 2. Dark Blue Night Overlay (mix-blend multiply) */}
                 <div 
                   className={`absolute inset-0 mix-blend-multiply pointer-events-none transition-opacity duration-700 ease-in-out ${
                     isNightMode ? "opacity-100" : "opacity-0"
@@ -294,23 +294,22 @@ export default function Home() {
                   style={{ backgroundColor: "rgba(10, 15, 30, 0.65)" }}
                 />
 
-                {/* Glowing Ceiling LED Lines Layer */}
+                {/* 3. Transparent WebP Glowing LED Lights Layer */}
                 <img
-                  src="/images/hero.webp"
+                  src="/images/hero_lights.webp"
                   alt="Glowing ceiling track lights"
-                  className={`absolute inset-0 w-full h-full object-cover mix-blend-screen pointer-events-none transition-opacity duration-700 ease-in-out ${
+                  className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-700 ease-in-out ${
                     isNightMode ? "opacity-100" : "opacity-0"
                   }`}
                   style={{
-                    clipPath: "polygon(0 0, 100% 0, 100% 35%, 75% 43%, 25% 43%, 0 38%)",
-                    filter: "brightness(0.53) contrast(22) saturate(0) blur(1.5px)"
+                    filter: "drop-shadow(0 0 12px rgba(255, 255, 255, 0.65))"
                   }}
                   draggable="false"
                 />
 
                 {/* Warm Light Ambient Glow radiating from the ceiling lights */}
                 <div 
-                  className={`absolute inset-0 bg-gradient-to-b from-amber-500/20 via-amber-500/5 to-transparent mix-blend-screen pointer-events-none transition-opacity duration-700 ease-in-out ${
+                  className={`absolute inset-0 bg-gradient-to-b from-amber-500/15 via-amber-500/2 to-transparent mix-blend-screen pointer-events-none transition-opacity duration-700 ease-in-out ${
                     isNightMode ? "opacity-100" : "opacity-0"
                   }`}
                   style={{
