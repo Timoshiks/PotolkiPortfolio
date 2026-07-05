@@ -131,3 +131,4 @@ a:focus-visible {
     transition: none !important;
   }
 }
+/* Vercel deployment trigger - revert elastic hover */
