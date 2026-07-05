@@ -299,11 +299,11 @@ export default function Home() {
                   src="/images/hero.webp"
                   alt="Glowing ceiling track lights"
                   className={`absolute inset-0 w-full h-full object-cover mix-blend-screen pointer-events-none transition-opacity duration-700 ease-in-out ${
-                    isNightMode ? "opacity-90" : "opacity-0"
+                    isNightMode ? "opacity-100" : "opacity-0"
                   }`}
                   style={{
-                    clipPath: "polygon(0 0, 100% 0, 100% 48%, 0 48%)",
-                    filter: "brightness(2.2) contrast(1.8) saturate(0.3) blur(2px)"
+                    clipPath: "polygon(0 0, 100% 0, 100% 35%, 75% 43%, 25% 43%, 0 38%)",
+                    filter: "brightness(0.53) contrast(22) saturate(0) blur(1.5px)"
                   }}
                   draggable="false"
                 />
