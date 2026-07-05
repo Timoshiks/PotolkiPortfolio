@@ -67,9 +67,6 @@ export default function Home() {
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [currentYear, setCurrentYear] = useState(2026);
 
-  // Day/Night mode state
-  const [isNightMode, setIsNightMode] = useState(false);
-
   // Form states
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
@@ -272,85 +269,12 @@ export default function Home() {
             </div>
 
             <div>
-              <div className="relative rounded-[1.75rem] overflow-hidden shadow-2xl shadow-ink/10 border border-white h-[380px] md:h-[480px] select-none bg-ink">
-                {/* 1. Base Day Image */}
+              <div class="rounded-[1.75rem] overflow-hidden shadow-2xl shadow-ink/10 border border-white">
                 <img
                   src="/images/hero.webp"
                   alt="Bright modern living room with an integrated lighting ceiling"
-                  className="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"
-                  style={{
-                    filter: isNightMode 
-                      ? "brightness(0.35) contrast(1.1) saturate(0.6)" 
-                      : "none"
-                  }}
-                  draggable="false"
+                  class="w-full h-[380px] md:h-[480px] object-cover"
                 />
-
-                {/* 2. Dark Blue Night Overlay (mix-blend multiply) */}
-                <div 
-                  className={`absolute inset-0 mix-blend-multiply pointer-events-none transition-opacity duration-700 ease-in-out ${
-                    isNightMode ? "opacity-100" : "opacity-0"
-                  }`} 
-                  style={{ backgroundColor: "rgba(10, 15, 30, 0.65)" }}
-                />
-
-                {/* 3. Transparent WebP Glowing LED Lights Layer */}
-                <img
-                  src="/images/hero_lights.webp"
-                  alt="Glowing ceiling track lights"
-                  className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-700 ease-in-out ${
-                    isNightMode ? "opacity-100" : "opacity-0"
-                  }`}
-                  style={{
-                    filter: "drop-shadow(0 0 12px rgba(255, 255, 255, 0.65))",
-                    clipPath: "polygon(0 0, 100% 0, 100% 31%, 75% 39%, 25% 39%, 0 34%)"
-                  }}
-                  draggable="false"
-                />
-
-                {/* Warm Light Ambient Glow radiating from the ceiling lights */}
-                <div 
-                  className={`absolute inset-0 bg-gradient-to-b from-amber-500/15 via-amber-500/2 to-transparent mix-blend-screen pointer-events-none transition-opacity duration-700 ease-in-out ${
-                    isNightMode ? "opacity-100" : "opacity-0"
-                  }`}
-                  style={{
-                    clipPath: "polygon(0 0, 100% 0, 100% 65%, 0 65%)"
-                  }}
-                />
-
-                {/* English Dual Toggle Control (Top-Right overlay) */}
-                <div className="absolute top-5 right-5 bg-white/95 backdrop-blur-md p-1 rounded-full flex gap-1 z-10 shadow-lg border border-ink/5">
-                  <button
-                    type="button"
-                    onClick={() => setIsNightMode(false)}
-                    className={`px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-1.5 transition-all duration-200 ${
-                      !isNightMode
-                        ? "bg-blue text-white shadow-sm"
-                        : "text-ink/65 hover:text-ink hover:bg-ink/5"
-                    }`}
-                  >
-                    <Sun className={`w-4 h-4 ${!isNightMode ? "text-white fill-white" : "text-orange-500"}`} />
-                    <span>Day</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setIsNightMode(true)}
-                    className={`px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-1.5 transition-all duration-200 ${
-                      isNightMode
-                        ? "bg-blue text-white shadow-sm"
-                        : "text-ink/65 hover:text-ink hover:bg-ink/5"
-                    }`}
-                  >
-                    <Moon className={`w-4 h-4 ${isNightMode ? "text-white fill-white" : "text-indigo-500"}`} />
-                    <span>Night</span>
-                  </button>
-                </div>
-
-                {/* English Label Overlay at bottom-left */}
-                <div className="absolute bottom-5 left-5 bg-black/60 backdrop-blur-md text-white px-4 py-2 rounded-xl text-xs font-semibold z-10 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-blue animate-pulse"></span>
-                  <span>{isNightMode ? "Night Lighting Active" : "Daylight Mode"}</span>
-                </div>
               </div>
 
               <div class="mt-5 flex flex-wrap items-center gap-x-8 gap-y-5 bg-white rounded-2xl shadow-lg shadow-ink/5 border border-ink/5 px-7 py-6">
